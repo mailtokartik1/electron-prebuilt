@@ -4,7 +4,7 @@
   "description": "Install electron (formerly called atom-shell) prebuilt binaries for command-line use using npm",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mafintosh/electron-prebuilt"
+    "url": "https://github.com/lunascape/proton-core-prebuilt"
   },
   "scripts": {
     "cache-clean": "rm -rf ~/.electron && rm -rf dist",
@@ -13,12 +13,12 @@
     "test": "standard && tape test/*.js"
   },
   "bin": {
-    "electron": "cli.js"
+    "proton-core": "cli.js"
   },
   "main": "index.js",
   "dependencies": {
     "extract-zip": "^1.0.3",
-    "electron-download": "brave/electron-download"
+    "proton-core-download": "git@github.com:lunascape/proton-core-download.git#dev"
   },
   "devDependencies": {
     "home-path": "^0.1.1",
