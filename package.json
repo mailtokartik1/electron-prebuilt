@@ -18,7 +18,7 @@
   "main": "index.js",
   "dependencies": {
     "extract-zip": "^1.0.3",
-    "proton-core-download": "git@github.com:lunascape/proton-core-download.git#dev"
+    "proton-core-download": "git@github.com:lunascape/proton-core-download.git#dev-kartik"
   },
   "devDependencies": {
     "home-path": "^0.1.1",
