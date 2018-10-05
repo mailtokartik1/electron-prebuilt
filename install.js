@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // maintainer note - x.y.z-ab version in package.json -> x.y.z
-var version = (process.env.npm_config_brave_electron_version || require('./package').version).replace(/-.*/, '')
+var version = require('./package').version
 
 var fs = require('fs')
 var os = require('os')
@@ -16,26 +16,33 @@ try {
   // do nothing
 }
 
-var platform = os.platform()
+var platform = process.env.npm_config_platform || os.platform()
 
 function onerror (err) {
   throw err
 }
 
 var paths = {
-  darwin: 'dist/Brave.app/Contents/MacOS/Brave',
-  linux: 'dist/brave',
-  win32: 'dist/brave.exe'
+  darwin: 'dist/Electron.app/Contents/MacOS/Electron',
+  freebsd: 'dist/electron',
+  linux: 'dist/electron',
+  win32: 'dist/electron.exe'
 }
 
-if (!paths[platform]) throw new Error('Unknown platform: ' + platform)
+if (!paths[platform]) throw new Error('Electron builds are not available on platform: ' + platform)
 
 if (installedVersion === version && fs.existsSync(path.join(__dirname, paths[platform]))) {
   process.exit(0)
 }
 
 // downloads if not cached
-download({version: version, arch: process.env.npm_config_arch, mirror: 'https://github.com/brave/electron/releases/download/v'}, extractFile)
+download({
+  version: version,
+  platform: process.env.npm_config_platform,
+  arch: process.env.npm_config_arch,
+  strictSSL: process.env.npm_config_strict_ssl === 'true',
+  quiet: ['info', 'verbose', 'silly', 'http'].indexOf(process.env.npm_config_loglevel) === -1
+}, extractFile)
 
 // unzips and makes path.txt point at the correct executable
 function extractFile (err, zipPath) {
